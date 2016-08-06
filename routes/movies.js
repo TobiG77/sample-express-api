@@ -36,4 +36,19 @@ router.get('/:Title', function(req, res, next) {
 });
 
 
+router.put('/:Title', function(req, res, next) {
+
+    var params = {
+        TableName: 'Movies',
+        Item: req.body
+    }
+
+    docClient.put(params, function(err, data) {
+        if (err) console.log(err);
+        else res.send(data);
+    });
+
+});
+
+
 module.exports = router;
