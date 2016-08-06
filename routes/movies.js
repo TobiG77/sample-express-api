@@ -3,6 +3,7 @@ var router = express.Router();
 
 var AWS = require('aws-sdk'),
     DOC = require("dynamodb-doc");
+var docClient = new DOC.DynamoDB(new AWS.DynamoDB({region: 'ap-southeast-2' }));
 
 router.get('/', function(req, res, next) {
     var params = {
@@ -11,8 +12,7 @@ router.get('/', function(req, res, next) {
 
     console.log("request", req);
     console.log("resource", res);
-    var docClient = new DOC.DynamoDB(new AWS.DynamoDB({region: 'ap-southeast-2' }));
-    // var docClient = new DOC.DynamoDB(new AWS.DynamoDB({region: 'ap-southeast-2', endpoint: new AWS.Endpoint("http://localhost:8000")}));
+
     docClient.scan(params, function(err, data) {
         if (err) console.log(err);
         else res.send(data);
@@ -21,7 +21,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:Title', function(req, res, next) {
-
 
     var params = {
         TableName: 'Movies',
